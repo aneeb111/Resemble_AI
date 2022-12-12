@@ -18,6 +18,7 @@ const CreateNewUser = async (req, res, next) => {
                 status: 201,
                 data: Registered_Users
             })
+            next()
             return Registered_Users;
 
         } else {
@@ -34,7 +35,11 @@ const CreateNewUser = async (req, res, next) => {
     }
 }
 
+const LoginRegisteredUser = () => {
+
+}
 
 module.exports = {
-    CreateNewUser
+    CreateNewUser,
+    LoginRegisteredUser
 }
