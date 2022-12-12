@@ -2,9 +2,10 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const dotenv = require('dotenv');
+const mongoose = require('mongoose')
 
 // Routes Declaration start here
-    const UserRoutes = require('./Routes/Users');
+const UserRoutes = require('./Routes/Users');
 // Routes Declaration end here
 
 app.use(express.json());
@@ -13,12 +14,21 @@ dotenv.config();
 
 
 // Routes usage start here
-    app.use('/Resemble_AI/User/',UserRoutes);
+app.use('/Resemble_AI/User/', UserRoutes);
 // Routes usage start here
 
 const port = process.env.PORT;
 
 
-app.listen( port , ()=>{
+// Database Connectivity start here
+mongoose.set('strictQuery', false);
+mongoose.connect(process.env.MONGODB_URL)
+    .then((res) => console.log(`Database Connected Successfully`))
+    .catch((err) => console.log(`Database Not Connected`))
+
+
+// Database Connectivity end here
+
+app.listen(port, () => {
     console.log(`Your Server is running on ${port} port`)
 })
