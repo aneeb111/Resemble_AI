@@ -1,6 +1,6 @@
 const UserModel = require('../Models/Users');
 const CryptoJS = require("crypto-js");
-
+const jwt = require('jsonwebtoken');
 const CreateNewUser = async (req, res, next) => {
     try {
         const user = new UserModel({
@@ -35,11 +35,47 @@ const CreateNewUser = async (req, res, next) => {
     }
 }
 
-const LoginRegisteredUser = () => {
+const LoginRegisteredUser = async (req,res,next) => {
+    try{
+        const email = req.body.email;
+        const password = req.body.password;
+    
+        const LoginUser = await UserModel.findOne({ email : email });
+        const gen_password = CryptoJS.AES.decrypt(LoginUser?.password , process.env.SECRET_KEY);
+        const original_password = gen_password.toString(CryptoJS.enc.Utf8);
+    
+        if(email !== LoginUser?.email ){
+            res.send({ message:"Email Not Matched" })
+        }else if (password !== original_password){
+            res.send({ message:"Password Not Matched" })
+        }else{
+          const token =  jwt.sign({
+                id : LoginUser._id
+            }, process.env.SECRET_KEY , { expiresIn: '1h' } )
+            res.send({
+                 message:"Login Successful",
+                 status:200,
+                 data:{ token}
+                })
+        }
+    }catch(err){
+        res.send({
+            message:"Login Failed",
+            status:404
+           })
+    }
 
 }
 
+const VerifyRegisteredUser = async (req,res) => {
+    console.log("kkkkkkkkkkkkkkk")
+    const Id =  req.id
+    console.log("77777",Id)
+    const VerifiedUser = await UserModel.find({ _id : Id })
+
+}
 module.exports = {
     CreateNewUser,
-    LoginRegisteredUser
+    LoginRegisteredUser,
+    VerifyRegisteredUser
 }
