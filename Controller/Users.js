@@ -1,7 +1,6 @@
 const UserModel = require('../Models/Users');
 const CryptoJS = require("crypto-js");
 const jwt = require('jsonwebtoken');
-const Resemble = require('@resemble/node')
 
 
 const CreateNewUser = async (req, res, next) => {
@@ -72,8 +71,6 @@ const LoginRegisteredUser = async (req,res,next) => {
 
 const VerifyRegisteredUser = async (req,res) => {
     try{
-        const resemble = await Resemble('v2', "fAW9INlBUMMTWQk6MSF7zgtt");
-        console.log("resemble",resemble)
         const Id =  req.id
         const verified_User = await UserModel.findById(Id);
         const { password , verifiedUser , ...details } = verified_User._doc
@@ -94,8 +91,10 @@ const VerifyRegisteredUser = async (req,res) => {
 
 
 
+
 module.exports = {
     CreateNewUser,
     LoginRegisteredUser,
     VerifyRegisteredUser
+
 }
