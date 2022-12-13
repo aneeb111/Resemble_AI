@@ -68,12 +68,27 @@ const LoginRegisteredUser = async (req,res,next) => {
 }
 
 const VerifyRegisteredUser = async (req,res) => {
-    console.log("kkkkkkkkkkkkkkk")
-    const Id =  req.id
-    console.log("77777",Id)
-    const VerifiedUser = await UserModel.find({ _id : Id })
-
+    try{
+        const Id =  req.id
+        const verified_User = await UserModel.findById(Id);
+        const { password , verifiedUser , ...details } = verified_User._doc
+        res.send({
+            message:"You have successfully Login",
+            status:200,
+            data : {...details}
+        })
+    }catch(err){
+        res.send({
+            message:"Login Failed!",
+            status:404
+        })
+    }
 }
+
+
+
+
+
 module.exports = {
     CreateNewUser,
     LoginRegisteredUser,

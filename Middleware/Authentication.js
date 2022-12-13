@@ -1,16 +1,22 @@
 const jwt = require('jsonwebtoken');
 
-const User_Token_Authentication = (req,res) => {
+const User_Token_Authentication = (req,res,next) => {
 
     const token = req.headers['authorization'].split(" ")[1];
     
     if(!token){
-        res.send({ message:"token is expired you are still un-Authorized" })
+        return  res.send({ message:"token is expired you are still un-Authorized" })
     }
-    else{
-        const decoded =  jwt.verify(token , process.env.SECRET_KEY)
-        return req.id = decoded.id
-    }
+
+        try{
+            const decoded =  jwt.verify(token , process.env.SECRET_KEY)
+             req.id = decoded.id
+            next();
+        }catch(err){
+            res.status(400).send("Invalid token.");
+        }
+        return next
+    
 
 }
 module.exports = User_Token_Authentication;

@@ -4,7 +4,7 @@ const { CreateNewUser, LoginRegisteredUser, VerifyRegisteredUser } = require('..
 
 router.post('/register', CreateNewUser);
 router.post('/login', LoginRegisteredUser);
-router.get('/profile', auth  , VerifyRegisteredUser);
+router.post('/profile', auth , VerifyRegisteredUser);
 
 
 module.exports = router
