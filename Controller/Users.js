@@ -1,6 +1,9 @@
 const UserModel = require('../Models/Users');
 const CryptoJS = require("crypto-js");
 const jwt = require('jsonwebtoken');
+ 
+
+
 const CreateNewUser = async (req, res, next) => {
     try {
         const user = new UserModel({
