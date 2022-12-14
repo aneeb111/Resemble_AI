@@ -83,9 +83,29 @@ const UpdateExistingProject = async (req,res) =>{
     })
 }
 
+const DeleteProject = async (req,res) => {
+try{
+    const uuid = req.params.uuid;
+    Resemble.setApiKey('dT1iznEUAGbY1J5cwR7kmAtt');
+    const Delete_project = await Resemble.v2.projects.delete(uuid);
+    if( Delete_project.success === true){
+        res.send({
+            message:"Project Delete Successfully",
+            status:201
+        })
+    }
+} catch(err){
+    res.send({
+        message:"Project Not Delete",
+        status:404
+    })
+}
+
+}
 module.exports = {
     ALLProjects,
     SpecificProject,
     CreateNewProject,
-    UpdateExistingProject
+    UpdateExistingProject,
+    DeleteProject
 }
