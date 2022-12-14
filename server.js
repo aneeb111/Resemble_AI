@@ -8,6 +8,7 @@ const mongoose = require('mongoose')
 const UserRoutes = require('./Routes/Users');
 const ProjectRoutes = require('./Routes/Project');
 const VoiceRoutes = require('./Routes/Voice');
+const RecordingRoutes = require('./Routes/Recording');
 // Routes Declaration end here
 
 app.use(express.json());
@@ -19,6 +20,7 @@ dotenv.config();
 app.use('/Resemble_AI/User/', UserRoutes);
 app.use('/Resemble_AI/Project/', ProjectRoutes);
 app.use('/Resemble_AI/Voice/', VoiceRoutes);
+app.use('/Resemble_AI/RecordingRoutes/', RecordingRoutes);
 // Routes usage start here
 
 const port = process.env.PORT;
