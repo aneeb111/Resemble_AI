@@ -3,22 +3,27 @@ const { Resemble } = require('@resemble/node');
 const New_Recording_Creation = async (req, res) => {
     try {
         const uuid = req.params.uuid;
-        console.log(uuid)
-        const fs = require('fs');
-        const file = fs.createReadStream('../public');
-        const filesize = file.statSync('../public').size;
-
         Resemble.setApiKey('dT1iznEUAGbY1J5cwR7kmAtt');
-        const Recording = await Resemble.v2.recordings.create({
-            file: req.body.file,
+        const filename = req.file.path;
+        const files = `${filename}`.replace("public", "");
+
+        const Recording = await Resemble.v2.recordings.create(uuid , {
+            names: JSON.stringify(req.body.names),
             emotion: req.body.emotion,
             is_active: req.body.is_active,
-            name: req.body.name,
-            text: req.body.text
+            text: req.body.text,
+            file: files
         })
-        console.log(Recording)
+        res.send({
+            message:"Recording has been created",
+            status:200,
+            data: Recording
+        })
     } catch (err) {
-        console.log("error com")
+        res.send({
+            message:"Recording has not been created",
+            status:404
+        })
     }
 }
 

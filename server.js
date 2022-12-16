@@ -2,6 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const dotenv = require('dotenv');
+
+const path = require('path');
 const mongoose = require('mongoose')
 
 // Routes Declaration start here
@@ -9,8 +11,10 @@ const UserRoutes = require('./Routes/Users');
 const ProjectRoutes = require('./Routes/Project');
 const VoiceRoutes = require('./Routes/Voice');
 const RecordingRoutes = require('./Routes/Recording');
+const ClipRoutes = require('./Routes/Clip');
 // Routes Declaration end here
 
+app.use(express.static(path.join(__dirname + '/public')))
 app.use(express.json());
 app.use(cors());
 dotenv.config();
@@ -21,6 +25,7 @@ app.use('/Resemble_AI/User/', UserRoutes);
 app.use('/Resemble_AI/Project/', ProjectRoutes);
 app.use('/Resemble_AI/Voice/', VoiceRoutes);
 app.use('/Resemble_AI/RecordingRoutes/', RecordingRoutes);
+app.use('/Resemble_AI/Clip/', ClipRoutes);
 // Routes usage start here
 
 const port = process.env.PORT;
