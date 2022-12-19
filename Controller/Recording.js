@@ -1,19 +1,19 @@
 const { Resemble } = require('@resemble/node');
-
+const fs = require('fs')
 const New_Recording_Creation = async (req, res) => {
     try {
-        const uuid = req.params.uuid;
+        const uuid = req?.params?.uuid;
         Resemble.setApiKey('dT1iznEUAGbY1J5cwR7kmAtt');
-        const filename = req.file.path;
-        const files = `${filename}`.replace("public", "");
-
+        const filename = req?.file?.path
+        const files = filename.replace(/\\/g, "/");
+        const image = fs.createReadStream(files);
+        const imageSize = fs.statSync(files).size
         const Recording = await Resemble.v2.recordings.create(uuid , {
-            names: JSON.stringify(req.body.names),
+            name: req.body.name,
             emotion: req.body.emotion,
             is_active: req.body.is_active,
-            text: req.body.text,
-            file: files
-        })
+            text: req.body.text
+        }, image , imageSize)
         res.send({
             message:"Recording has been created",
             status:200,
