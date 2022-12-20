@@ -34,8 +34,8 @@ const port = process.env.PORT;
 // Database Connectivity start here
 mongoose.set('strictQuery', false);
 mongoose.connect(process.env.MONGODB_URL)
-    .then((res) => console.log(`Database Connected Successfully`))
-    .catch((err) => console.log(`Database Not Connected`))
+    .then((res) => console.log(`Mongo Database Connected Successfully`))
+    .catch((err) => console.log(`Mongo Database Not Connected`))
 
 
 // Database Connectivity end here
