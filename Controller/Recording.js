@@ -16,7 +16,7 @@ const New_Recording_Creation = async (req, res) => {
         }, image , imageSize)
         res.send({
             message:"Recording has been created",
-            status:200,
+            status:201,
             data: Recording
         })
     } catch (err) {
@@ -31,8 +31,8 @@ const AllRecording = async (req, res) => {
     try {
         const uuid = req.params.uuid
         Resemble.setApiKey('dT1iznEUAGbY1J5cwR7kmAtt');
-        let page = 1
-        let pageSize = 10
+        let page = req.query.page;
+        let pageSize = req.query.pageSize;
         const Voice = await Resemble.v2.voices.get(uuid);
         const getAllRecording = await Resemble.v2.recordings.all(uuid, page, pageSize);
         res.send({
@@ -49,7 +49,27 @@ const AllRecording = async (req, res) => {
 
 }
 
+const Get_Specfic_Recording = async (req,res) => {
+    try{
+        const Voice_id = req.params.uuid;
+        const Recording_id = req.params.r_uuid;
+        Resemble.setApiKey('dT1iznEUAGbY1J5cwR7kmAtt');
+        const selected_data = await Resemble.v2.recordings.get(Voice_id , Recording_id);
+        res.send({
+            message:"Recording Data Fetched",
+            status:200,
+            data: selected_data
+        })
+    }catch(err){
+        res.send({
+            message:"Data Not Found",
+            status:404
+        })
+    }
+
+}
 module.exports = {
     New_Recording_Creation,
-    AllRecording
+    AllRecording,
+    Get_Specfic_Recording
 }
