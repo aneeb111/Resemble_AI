@@ -2,7 +2,7 @@ const { Resemble } = require('@resemble/node');
 
 const ALLProjects = async (req, res) => {
     try {
-        Resemble.setApiKey('dT1iznEUAGbY1J5cwR7kmAtt')
+        Resemble.setApiKey(process.env.RESEMBLE_AI_KEY)
         let page = 1
         let pageSize = 10
         const response = await Resemble.v2.projects.all(page, pageSize)
@@ -23,7 +23,7 @@ const ALLProjects = async (req, res) => {
 const SpecificProject = async (req, res) => {
     try {
         const uuid = req?.params?.uuid
-        Resemble.setApiKey('dT1iznEUAGbY1J5cwR7kmAtt');
+        Resemble.setApiKey(process.env.RESEMBLE_AI_KEY);
         const data = await Resemble.v2.projects.get(uuid);
         res.send({
             message: `Data Fetch for ${data?.item?.name} Project`,
@@ -42,7 +42,7 @@ const SpecificProject = async (req, res) => {
 
 const CreateNewProject = async (req, res) => {
     try {
-        Resemble.setApiKey('dT1iznEUAGbY1J5cwR7kmAtt')
+        Resemble.setApiKey(process.env.RESEMBLE_AI_KEY)
         const New_project = await Resemble.v2.projects.create({
             name : req.body.name,
             description : req.body.description,
@@ -68,7 +68,7 @@ const CreateNewProject = async (req, res) => {
 const UpdateExistingProject = async (req,res) =>{
     const uuid = req.params.uuid;
     
-    Resemble.setApiKey('dT1iznEUAGbY1J5cwR7kmAtt')
+    Resemble.setApiKey(process.env.RESEMBLE_AI_KEY)
     const Update_data = await Resemble.v2.projects.update(uuid,{
         name : req.body.name,
         description : req.body.description,
@@ -86,7 +86,7 @@ const UpdateExistingProject = async (req,res) =>{
 const DeleteProject = async (req,res) => {
 try{
     const uuid = req.params.uuid;
-    Resemble.setApiKey('dT1iznEUAGbY1J5cwR7kmAtt');
+    Resemble.setApiKey(process.env.RESEMBLE_AI_KEY);
     const Delete_project = await Resemble.v2.projects.delete(uuid);
     if( Delete_project.success === true){
         res.send({

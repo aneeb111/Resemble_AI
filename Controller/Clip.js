@@ -2,7 +2,7 @@ const { Resemble } = require('@resemble/node');
 
 const Create_New_Clip = async (req,res) => {
     const uuid = req.params.uuid;
-    Resemble.setApiKey('dT1iznEUAGbY1J5cwR7kmAtt');
+    Resemble.setApiKey(process.env.RESEMBLE_AI_KEY);
 
     const data = await Resemble.v2.clips.createAsync(uuid,{
         title : req.body.title,

@@ -4,7 +4,7 @@ const fs = require('fs')
 const New_Recording_Creation = async (req, res) => {
     try {
         const uuid = req?.params?.uuid;
-        Resemble.setApiKey('dT1iznEUAGbY1J5cwR7kmAtt');
+        Resemble.setApiKey(process.env.RESEMBLE_AI_KEY);
         const filename = req?.file?.path
         const files = filename.replace(/\\/g, "/");
         const image = fs.createReadStream(files);
@@ -31,7 +31,7 @@ const New_Recording_Creation = async (req, res) => {
 const AllRecording = async (req, res) => {
     try {
         const uuid = req.params.uuid
-        Resemble.setApiKey('dT1iznEUAGbY1J5cwR7kmAtt');
+        Resemble.setApiKey(process.env.RESEMBLE_AI_KEY);
         let page = req.query.page;
         let pageSize = req.query.pageSize;
         const Voice = await Resemble.v2.voices.get(uuid);
@@ -54,7 +54,7 @@ const Get_Specfic_Recording = async (req, res) => {
     try {
         const Voice_id = req.params.uuid;
         const Recording_id = req.params.r_uuid;
-        Resemble.setApiKey('dT1iznEUAGbY1J5cwR7kmAtt');
+        Resemble.setApiKey(process.env.RESEMBLE_AI_KEY);
         const selected_data = await Resemble.v2.recordings.get(Voice_id, Recording_id);
         res.send({
             message: "Recording Data Fetched",
@@ -74,7 +74,7 @@ const Update_Those_Recording = async (req, res) => {
     try {
         const voice_id = req.params.uuid;
         const record_id = req.params.r_uuid;
-        Resemble.setApiKey('dT1iznEUAGbY1J5cwR7kmAtt');
+        Resemble.setApiKey(process.env.RESEMBLE_AI_KEY);
         const update_Record = await Resemble.v2.recordings.update(voice_id, record_id, {
             emotion: req.body.emotion,
             is_active: req.body.is_active || false,
@@ -101,8 +101,7 @@ const Delete_Recording = async (req,res) => {
     try{
         const voice_id = req.params.uuid;
         const record_id = req.params.r_uuid;
-        console.log("voice_id",voice_id , "record_id",record_id)
-        Resemble.setApiKey('dT1iznEUAGbY1J5cwR7kmAtt');
+        Resemble.setApiKey(process.env.RESEMBLE_AI_KEY);
         const Selected_voice = await Resemble.v2.voices.get(voice_id);
         const DeleteRecord = await Resemble.v2.recordings.delete(voice_id , record_id);
         res.send({

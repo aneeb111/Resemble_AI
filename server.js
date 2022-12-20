@@ -41,5 +41,5 @@ mongoose.connect(process.env.MONGODB_URL)
 // Database Connectivity end here
 
 app.listen(port, () => {
-    console.log(`Your Server is running on ${port} port`)
+    console.log(`Resemble AI Server is running on ${port} port`)
 })
