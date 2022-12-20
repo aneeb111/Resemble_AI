@@ -79,9 +79,28 @@ const Build_Voice = async (req,res ) => {
         })
     }
 }
+
+const Delete_Voice = async (req,res) => {
+    try{
+        const voice_id = req.params.uuid
+        Resemble.setApiKey(process.env.RESEMBLE_AI_KEY);
+        const Delete_voice = await Resemble.v2.voices.delete(voice_id);
+        res.send({
+            message:"Voice has been Deleted",
+            status:202,
+            data: Delete_voice.success
+        })
+    } catch(err){
+        res.send({
+            message:"Voice not Deleted",
+            status:204
+        })
+    }
+}
 module.exports = {
     New_Voice_Creation,
     Build_Voice,
     GetAllVoices,
-    Get_Specfic_Voice
+    Get_Specfic_Voice,
+    Delete_Voice
 }
