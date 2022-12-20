@@ -62,13 +62,22 @@ const Get_Specfic_Voice  = async (req,res) => {
     
 }
 
-
-
 const Build_Voice = async (req,res ) => {
-    const uuid = req.params.uuid;
-    Resemble.setApiKey(process.env.RESEMBLE_AI_KEY);
-    const data = await Resemble.v2.voices.build(uuid);
-    console.log(data)
+    try{
+        const voice_id = req.params.uuid;
+        Resemble.setApiKey(process.env.RESEMBLE_AI_KEY);
+        const data = await Resemble.v2.voices.build(voice_id);
+        res.send({
+            message:"Voice Trained Successfully",
+            status:201,
+            data:data
+        })
+    } catch(err){
+        res.send({
+            message:"Voice Not Build",
+            status:404
+        })
+    }
 }
 module.exports = {
     New_Voice_Creation,
