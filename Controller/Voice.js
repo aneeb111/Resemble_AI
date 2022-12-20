@@ -42,6 +42,27 @@ const GetAllVoices = async (req,res) => {
    
 }
 
+const Get_Specfic_Voice  = async (req,res) => {
+    try{
+        const voice_id = req.params.uuid;
+        Resemble.setApiKey(process.env.RESEMBLE_AI_KEY);
+        const Data_fetched = await Resemble.v2.voices.get(voice_id);
+        res.send({
+            message:`${Data_fetched?.item?.name} Voice Fetched Successfully`,
+            status:200,
+            data: Data_fetched.item
+        })
+    } catch(err){
+        res.send({
+            message:`Voice Not Found`,
+            status:404
+        })
+    }
+    
+    
+}
+
+
 
 const Build_Voice = async (req,res ) => {
     const uuid = req.params.uuid;
@@ -52,5 +73,6 @@ const Build_Voice = async (req,res ) => {
 module.exports = {
     New_Voice_Creation,
     Build_Voice,
-    GetAllVoices
+    GetAllVoices,
+    Get_Specfic_Voice
 }
