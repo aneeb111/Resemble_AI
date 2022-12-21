@@ -7,7 +7,7 @@ const {
 } = require('../Controller/Clip')
 
 
-router.post('/Project_id/:uuid/clips' , Create_New_Clip );
+router.post('/User_id/:uid/Project_id/:uuid/clips' , Create_New_Clip );
 
 
 

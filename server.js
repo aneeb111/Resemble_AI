@@ -2,7 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const dotenv = require('dotenv');
-
 const path = require('path');
 const mongoose = require('mongoose')
 
@@ -31,6 +30,7 @@ app.use('/Resemble_AI/Clip/', ClipRoutes);
 const port = process.env.PORT;
 
 
+
 // Database Connectivity start here
 mongoose.set('strictQuery', false);
 mongoose.connect(process.env.MONGODB_URL)
@@ -39,6 +39,8 @@ mongoose.connect(process.env.MONGODB_URL)
 
 
 // Database Connectivity end here
+
+
 
 app.listen(port, () => {
     console.log(`Resemble AI Server is running on ${port} port`)
