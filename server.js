@@ -4,13 +4,7 @@ const app = express();
 const dotenv = require('dotenv');
 const path = require('path');
 const mongoose = require('mongoose')
-const fs = require('fs')
-const options = {
-    key:fs.readFileSync('./home2/apimyprojectstag/ssl/keys/bbc29_85873_5242d91a6635bc5edf93d1857ce09cbd.key'),
-    cert: fs.readFileSync('./home2/apimyprojectstag/ssl/certs/api_myprojectstaging_com_bbc29_85873_1678147199_fbbbb25d1881833303385f8999769e5c.crt'),
-};
 
-const server = require('https').createServer(options,app)
 // Routes Declaration start here
 const UserRoutes = require('./Routes/Users');
 const ProjectRoutes = require('./Routes/Project');
@@ -48,6 +42,6 @@ mongoose.connect(process.env.MONGODB_URL)
 
 
 
-server.listen(port, () => {
+app.listen(port, () => {
     console.log(`Resemble AI Server is running on ${port} port`)
 })
