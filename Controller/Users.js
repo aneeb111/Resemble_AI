@@ -87,6 +87,27 @@ const VerifyRegisteredUser = async (req,res) => {
     }
 }
 
+const AllUsers = async (req,res) => {
+    try{
+        const limit = req.query.limit;
+        const offset = req.query.offset;
+        const skip = (offset - 1) * limit;
+        
+        const allUsers = await UserModel.find().limit(limit).skip(skip);
+        
+        res.send({
+            message:"ALL USERS DATA FETCH SUCCESSFULLY",
+            status:200,
+            data: allUsers
+        })
+    }catch(err){
+        res.send({
+            message:"DATA NOT FETCH SUCCESSFULLY",
+            status:404
+        })
+    }
+
+}
 
 
 
@@ -95,6 +116,7 @@ const VerifyRegisteredUser = async (req,res) => {
 module.exports = {
     CreateNewUser,
     LoginRegisteredUser,
-    VerifyRegisteredUser
+    VerifyRegisteredUser,
+    AllUsers
 
 }
