@@ -69,11 +69,17 @@ const Get_All_Clips = async (req,res) => {
         Resemble.setApiKey(process.env.RESEMBLE_AI_KEY);
         const Project = await Resemble.v2.projects.get(Project_id)
         const All_Project_Clips = await Resemble.v2.clips.all(Project_id ,page,pageSize);
+        const [  ...datas ] = [...All_Project_Clips.items]
+        const Alldata = [...datas]
+        const u =  Alldata.map((data) => {
+            const { timestamps , ...details } = data
+            return details
+        })
         res.send({
-            total : All_Project_Clips?.items?.length,
+            total :u?.length,
             message:`${Project?.item?.name} Project All Clips Fetched`,
             status:201,
-            data: All_Project_Clips?.items
+            data: u
         })
     }catch(err){
         console.log(err)
